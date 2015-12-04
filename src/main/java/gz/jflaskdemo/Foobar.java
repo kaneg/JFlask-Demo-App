@@ -8,6 +8,6 @@ package gz.jflaskdemo;
  */
 public class Foobar {
     public String foobar(){
-        return "12345678";
+        return "1234567890";
     }
 }

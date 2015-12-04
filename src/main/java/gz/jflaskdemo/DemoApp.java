@@ -1,8 +1,8 @@
 package gz.jflaskdemo;
 
 import gz.jflask.FlaskContext;
-import gz.jflask.annotation.AppView;
-import gz.jflask.annotation.DefaultValue;
+import gz.jflask.annotation.App;
+import gz.jflask.annotation.Default;
 import gz.jflask.annotation.Route;
 import gz.jflask.annotation.Var;
 import gz.jflask.result.Redirect;
@@ -20,12 +20,12 @@ import java.io.IOException;
  * Date: 6/13/15
  * Time: 3:42 PM
  */
-@AppView()
+@App()
 public class DemoApp {
     @Route("/index")
     @Route("/index/<path>")
     @Route("/index/<path>/<page>")
-    public Template index(@DefaultValue("foobar") String path, @Var("page") @DefaultValue("0") long arg) throws IOException {
+    public Template index(@Default("foobar") String path, @Var("page") @Default("0") long arg) throws IOException {
         HttpServletRequest req = FlaskContext.getRequest();
         System.out.println("In index:" + req.getPathInfo());
         System.out.println("path:" + path);
@@ -48,9 +48,10 @@ public class DemoApp {
 
 
     @Route("/bar")
-    public Template bar() {
+    @Route("/bar/<name>")
+    public Template bar(@Default("buddy")@Var("name") String name) {
         SimpleBindings context = new SimpleBindings();
-        context.put("name", "buddy");
+        context.put("name", name);
         return new FileTemplate("bar.html", context);
     }
 
